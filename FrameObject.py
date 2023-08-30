@@ -89,6 +89,9 @@ class FrameObject(tk.Toplevel):
                 self.new_object = obj
                 self.object_list.append(obj)
                 # Добавляем запись в лог
-                sl.save_log(f"{obj.id} {obj.num} - {obj.name}", f"Добавление Объекта")
+                sl.save_log(id_obj=obj.id,
+                            num_obj=obj.num,
+                            name_obj=obj.name,
+                            mess="Добавление Объекта")
                 break
         self.destroy()

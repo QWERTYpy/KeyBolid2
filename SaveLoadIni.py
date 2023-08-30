@@ -4,11 +4,11 @@ import os
 import time
 
 
-def save_log(edit_data, mess):
+def save_log(fio = '', key_pers = '', num_obj = '', name_obj = '', id_obj = '', mess = ''):
     # Файл для сохранения изменений
     path = 'log_bd.txt'
     file = open(path, 'a')
-    file.write(f'{time.strftime("%d-%m-%y %H:%M", time.localtime())} | {mess} | {edit_data}\n')
+    file.write(f'{time.strftime("%d-%m-%y %H:%M", time.localtime())} | {fio} | {key_pers} | {num_obj} | {name_obj} | {id_obj} | {mess}\n')
     file.close()
 
 

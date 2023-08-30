@@ -62,7 +62,7 @@ class MainMenu:
                         # Обновляем значение флагов для номеров Объектов в который удалились люди
                         self.object_flag.update({___: 1 for ___ in __.get_obj()})
                         # Записываем информацию в лог
-                        sl.save_log(f"{_[0]} {_[1]} {_[2]} | {_[3]} ", f"Удаление Персоны")
+                        sl.save_log(fio= f'{_[0]} {_[1]} {_[2]}', key_pers=_[3], mess="Удаление Персоны")
                         self.person_list.remove(__)
                         self.flag_change = True
                         break
@@ -90,7 +90,7 @@ class MainMenu:
                         # Обновляем значение флагов для номеров Объектов в который удалились люди
                         self.object_flag.update({___: 1 for ___ in __.get_obj()})
                         # Записываем информацию в лог
-                        sl.save_log(f"{_[0]} {_[1]} {_[2]} | {_[3]}", f"Удаление Заблокированной Персоны")
+                        sl.save_log(fio=f"{_[0]} {_[1]} {_[2]}", key_pers= _[3], mess=f"Удаление Заблокированной Персоны")
                         self.person_list.remove(__)
                         self.flag_change = True
                         break
@@ -120,7 +120,7 @@ class MainMenu:
                             title="Удаление записи",
                             message="Удалить все записи по выбранному человеку?")
                         if answer:
-                            sl.save_log(f"{_.surname} {_.name} {_.key} - {self.table.object_main}", f"Удаление Персоны")
+                            sl.save_log(fio=f"{_.surname} {_.name} {_.key}", id_obj=self.table.object_main, mess="Удаление Персоны")
                             self.person_list.remove(_)
                             self.flag_change = True
                             break
@@ -143,7 +143,7 @@ class MainMenu:
                         # Удаляем из списка прав запись соответвующую выбранному Объекту
                         for __ in self.object_list:
                             if __.id == self.table.object_main:
-                                sl.save_log(f"{_.surname} {_.name} {_.key} - {__.num} {__.name}", f"Удаление Персоны")
+                                sl.save_log(fio=f"{_.surname} {_.name} {_.key}", num_obj=__.num, name_obj=__.name, mess="Удаление Персоны")
                                 _.permission.pop(self.table.object_main)
 
                         if len(_.permission) == 0:
@@ -323,17 +323,21 @@ class MainMenu:
                                 new_person.permission[frame_object.new_object.id] = [frame_object.new_object.num,
                                                                                      '000000',
                                                                                      self.file_perm.upper()]
-                                sl.save_log(
-                                    f"{new_person.surname} {new_person.name} {new_person.key} - {frame_object.new_object.id} {frame_object.new_object.num} {frame_object.new_object.name} ",
-                                    f"Импорт Персоны")
+                                sl.save_log(fio=f"{new_person.surname} {new_person.name} {new_person.key}",
+                                            id_obj=frame_object.new_object.id,
+                                            num_obj=frame_object.new_object.num,
+                                            name_obj=frame_object.new_object.name,
+                                            mess="Импорт Персоны")
                         else:
                             if self.old_object:
                                 new_person.permission[self.old_object.id] = [self.old_object.num,
                                                                              '000000',
                                                                              self.file_perm.upper()]
-                                sl.save_log(
-                                    f"{new_person.surname} {new_person.name} {new_person.key} - {self.old_object.id} {self.old_object.num} {self.old_object.name}",
-                                    f"Импорт Персоны")
+                                sl.save_log(fio=f"{new_person.surname} {new_person.name} {new_person.key}",
+                                            id_obj= self.old_object.id,
+                                            num_obj= self.old_object.num,
+                                            name_obj= self.old_object.name,
+                                            mess="Импорт Персоны")
 
                         # В список добавляется новая Персона
                         self.person_list.append(new_person)
