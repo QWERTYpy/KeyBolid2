@@ -7,7 +7,7 @@ class InfoFrame:
         self.root = root
         self.title_left_down_text = tk.StringVar()
         self.title_left_down_text.set("Добро пожаловать ...")
-        self.title_left_down = tk.Label(self.root, anchor="nw", height=1, width=20,
+        self.title_left_down = tk.Label(self.root, anchor="nw", height=1, width=30,
                                         textvariable=self.title_left_down_text, background='white')
         self.title_left_down.place(x=10, y=570)
 
@@ -19,6 +19,13 @@ class InfoFrame2:
         self.title_left_down = tk.Label(self.root, anchor="nw", height=1, width=50,
                                         textvariable=self.title_left_down_text, background='white')
         self.title_left_down.place(x=300, y=570)
+
+    def update(self,object_flag):
+        str_object_flag = ''
+        for _ in object_flag:
+            if object_flag[_]:
+                str_object_flag += _ + ','
+        self.title_left_down_text.set(f"Изменения в {str_object_flag}")
 
 
 

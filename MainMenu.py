@@ -69,18 +69,11 @@ class MainMenu:
         self.table.search_table_action()
         self.info_frame.title_left_down_text.set(f"Удалено {_count_del} пропусков")
         self.info_frame.title_left_down.update()
-        str_object_flag = ''
-        for _ in self.object_flag:
-            if self.object_flag[_]:
-                str_object_flag+=_+','
-        self.info_frame2.title_left_down_text.set(f"Изменения в {str_object_flag}")
+        self.info_frame2.update(self.object_flag)
 
 
     def main_menu_delete_block(self):
         # Удаление заблокированных пропусков
-        # if self.table.object_main == '000':
-        #     self.info_frame.title_left_down_text.set("Выберите Объект ...")
-        # else:
         person_bd = PostgessBase()
         # Пробегаем весь список персон соответсвующих выбранному Объекту
         self.info_frame.title_left_down_text.set(f"Удаление пропусков ...")
@@ -103,11 +96,7 @@ class MainMenu:
         self.table.search_table_action()
         self.info_frame.title_left_down_text.set(f"Удалено {_count_block} забл. пропусков")
         self.info_frame.title_left_down.update()
-        str_object_flag = ''
-        for _ in self.object_flag:
-            if self.object_flag[_]:
-                str_object_flag += _ + ','
-        self.info_frame2.title_left_down_text.set(f"Изменения в {str_object_flag}")
+        self.info_frame2.update(self.object_flag)
 
     def main_menu_delete_person(self):
         """

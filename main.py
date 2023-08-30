@@ -27,7 +27,6 @@ def on_closing():
 object_list = sl.load_object_ini()  # Список объектов
 person_list = sl.load_person_ini()  # Список персон
 object_flag = {_.num: 0 for _ in object_list}
-print(object_flag)
 # Создаем приложение
 root = tk.Tk()
 root.protocol("WM_DELETE_WINDOW", on_closing)
