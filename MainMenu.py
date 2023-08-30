@@ -13,7 +13,7 @@ from tkinter import messagebox as mb
 
 
 class MainMenu:
-    def __init__(self, root, table, info_frame, person_list, object_list):
+    def __init__(self, root, table, info_frame, info_frame2, person_list, object_list, object_flag):
         """
         Инициализируем верхнее меню
         :param root: Указатель на основное окно
@@ -25,8 +25,10 @@ class MainMenu:
         self.root = root
         self.table = table
         self.info_frame = info_frame
+        self.info_frame2 = info_frame2
         self.person_list = person_list
         self.object_list = object_list
+        self.object_flag = object_flag
         self.flag_change = False  # Флаг для отслеживания изменений
         self.open_object = 0  # Инициируем переменную содержащую номер импортируемого Объекта получаемого из названия файла
         self.main_menu = tk.Menu(self.root)
@@ -45,51 +47,67 @@ class MainMenu:
 
     def main_menu_delete_return(self):
         # Удаление возвращенных пропусков
-        if self.table.object_main == '000':
-            self.info_frame.title_left_down_text.set("Выберите Объект ...")
-        else:
-            person_bd = PostgessBase()
-            # Пробегаем весь список персон соответсвующих выбранному Объекту
-            for _ in self.table.people_table:
-                # Если ключ возвращен, то удаляем его
-                if person_bd.search_card(_[3]) != 1:
-                    # Находим указатель на интересующую персону
-                    for __ in self.person_list:
-                        if __.key == _[3]:
-                            sl.save_log(f"{_[0]} {_[1]} {_[2]} {_[3]}- {self.table.object_main}", f"Удаление Персоны")
-                            __.permission.pop(self.table.object_main)
+        person_bd = PostgessBase()
+        # Пробегаем весь список персон соответсвующих выбранному Объекту
+        self.info_frame.title_left_down_text.set(f"Удаление пропусков ...")
+        self.info_frame.title_left_down.update()
+        _count_del = 0
+        for _ in self.table.people_table:
+            # Если ключ возвращен, то удаляем его
+            if person_bd.search_card(_[3]) != 1:
+                _count_del += 1
+                # Находим указатель на интересующую персону
+                for __ in self.person_list:
+                    if __.key == _[3]:
+                        # Обновляем значение флагов для номеров Объектов в который удалились люди
+                        self.object_flag.update({___: 1 for ___ in __.get_obj()})
+                        # Записываем информацию в лог
+                        sl.save_log(f"{_[0]} {_[1]} {_[2]} | {_[3]} ", f"Удаление Персоны")
+                        self.person_list.remove(__)
+                        break
+        # Обновляем записи в таблице
+        self.table.search_table_action()
+        self.info_frame.title_left_down_text.set(f"Удалено {_count_del} пропусков")
+        self.info_frame.title_left_down.update()
+        str_object_flag = ''
+        for _ in self.object_flag:
+            if self.object_flag[_]:
+                str_object_flag+=_+','
+        self.info_frame2.title_left_down_text.set(f"Изменения в {str_object_flag}")
 
-                            if len(__.permission) == 0:
-                                self.person_list.remove(__)
-                                break
-            # Обновляем записи в таблице
-            self.table.search_table_action()
 
     def main_menu_delete_block(self):
         # Удаление заблокированных пропусков
-        if self.table.object_main == '000':
-            self.info_frame.title_left_down_text.set("Выберите Объект ...")
-        else:
-            person_bd = PostgessBase()
-            # Пробегаем весь список персон соответсвующих выбранному Объекту
-            for _ in self.table.people_table:
-                # Если ключ возвращен, то удаляем его
-                if person_bd.search_block(_[3]) == 1:
-                    # Находим указатель на интересующую персону
-                    for __ in self.person_list:
-
-                        if __.key == _[3]:
-                            for ___ in self.object_list:
-                                if ___.id == self.table.object_main:
-
-                                    sl.save_log(f"{_[0]} {_[1]} {_[2]} {_[3]}- {___.num} {___.name}", f"Удаление Заблокированной Персоны")
-                                    __.permission.pop(self.table.object_main)
-
-                                    if len(__.permission) == 0:
-                                        self.person_list.remove(__)
-                                        break
-            # Обновляем записи в таблице
-            self.table.search_table_action()
+        # if self.table.object_main == '000':
+        #     self.info_frame.title_left_down_text.set("Выберите Объект ...")
+        # else:
+        person_bd = PostgessBase()
+        # Пробегаем весь список персон соответсвующих выбранному Объекту
+        self.info_frame.title_left_down_text.set(f"Удаление пропусков ...")
+        self.info_frame.title_left_down.update()
+        _count_block = 0
+        for _ in self.table.people_table:
+            # Если ключ возвращен, то удаляем его
+            if person_bd.search_block(_[3]) == 1:
+                _count_block += 1
+                # Находим указатель на интересующую персону
+                for __ in self.person_list:
+                    if __.key == _[3]:
+                        # Обновляем значение флагов для номеров Объектов в который удалились люди
+                        self.object_flag.update({___: 1 for ___ in __.get_obj()})
+                        # Записываем информацию в лог
+                        sl.save_log(f"{_[0]} {_[1]} {_[2]} | {_[3]}", f"Удаление Заблокированной Персоны")
+                        self.person_list.remove(__)
+                        break
+        # Обновляем записи в таблице
+        self.table.search_table_action()
+        self.info_frame.title_left_down_text.set(f"Удалено {_count_block} забл. пропусков")
+        self.info_frame.title_left_down.update()
+        str_object_flag = ''
+        for _ in self.object_flag:
+            if self.object_flag[_]:
+                str_object_flag += _ + ','
+        self.info_frame2.title_left_down_text.set(f"Изменения в {str_object_flag}")
 
     def main_menu_delete_person(self):
         """

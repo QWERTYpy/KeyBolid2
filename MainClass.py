@@ -2,8 +2,6 @@
 import tkinter as tk
 
 # Класс отвечающий за вывод Информационного поля
-
-
 class InfoFrame:
     def __init__(self, root):
         self.root = root
@@ -12,9 +10,19 @@ class InfoFrame:
         self.title_left_down = tk.Label(self.root, anchor="nw", height=1, width=20,
                                         textvariable=self.title_left_down_text, background='white')
         self.title_left_down.place(x=10, y=570)
+
+class InfoFrame2:
+    def __init__(self, root):
+        self.root = root
+        self.title_left_down_text = tk.StringVar()
+        self.title_left_down_text.set("Изменений нет.")
+        self.title_left_down = tk.Label(self.root, anchor="nw", height=1, width=50,
+                                        textvariable=self.title_left_down_text, background='white')
+        self.title_left_down.place(x=300, y=570)
+
+
+
 # Класс описывающий прибор
-
-
 class ObjectBolid:
     def __init__(self):
         self.num = 0  # Номер прибора
@@ -43,6 +51,9 @@ class Person:
         for _ in self.permission.keys():
             _list_obj.append(self.permission[_][0])
         return (',').join(_list_obj)
+
+    def get_obj(self):
+        return [_[0] for _ in self.permission.values()]
 
     def show(self):
         print(self.name, self.surname, self.patronymic, self.key, self.permission)
@@ -127,4 +138,4 @@ if __name__ == '__main__':
     per = Person("Иван", "Иванович", "Иванович", "555555555555")
     per.permission = {"021": ["7", "000000", "100000"], "022": ["79", "000000", "100000"], "023": ["80", "000000", "FF0300"], "025": ["5", "000000", "081100"]}
     per.show()
-    print(per.get_perm_obj())
+    print(per.get_obj())

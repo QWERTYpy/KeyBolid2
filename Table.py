@@ -9,12 +9,13 @@ from FrameObject import FrameObject
 
 
 class Table:
-    def __init__(self, root, info_frame, object_list, person_list):
+    def __init__(self, root, info_frame, info_frame2, object_list, person_list):
         self.flag_change = False  # Флаг изменений в записях
         self.root = root  # Указатель на основное окно
         self.object_list = object_list  # Список Объектов
         self.person_list = person_list  # Список Персон
         self.info_frame = info_frame  # Указатель на информационное поле
+        self.info_frame2 = info_frame2
         self.object_main = '000'  # По умолчанию выбран Объект 000 - Все
         self.object_list_len = len(object_list)  # Количество Объектов
         # Добавление элемента для выбора конкретного Объекта
@@ -238,9 +239,9 @@ class Table:
         for _ in self.object_list:
             if self.object_main == _.id:
                 if _.type == '10':
-                    sig10.write_key(_.num, permission_list)
+                    Sig10.write_key(_.num, permission_list)
                 if _.type == '4':
-                    c20004.write_key(_.num, permission_list)
+                    C2004.write_key(_.num, permission_list)
 
     def combobox_btn_press(self):
         """

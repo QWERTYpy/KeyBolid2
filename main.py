@@ -2,7 +2,7 @@ import tkinter as tk
 import SaveLoadIni as sl
 import MainMenu as mm
 import Table as tbl
-from MainClass import InfoFrame
+from MainClass import InfoFrame, InfoFrame2
 from tkinter import messagebox as mb
 
 
@@ -26,6 +26,8 @@ def on_closing():
 # Основные переменные
 object_list = sl.load_object_ini()  # Список объектов
 person_list = sl.load_person_ini()  # Список персон
+object_flag = {_.num: 0 for _ in object_list}
+print(object_flag)
 # Создаем приложение
 root = tk.Tk()
 root.protocol("WM_DELETE_WINDOW", on_closing)
@@ -35,9 +37,10 @@ root.resizable(False, False)  # Запрещаем изменять размер
 root.configure(background='#ffffff')  # Устанавливаем цвет фона
 # Создаем инфополе
 infoframe = InfoFrame(root)
+infoframe2 = InfoFrame2(root)
 # Создаем основную таблицу
-table = tbl.Table(root, infoframe, object_list, person_list)
+table = tbl.Table(root, infoframe, infoframe2, object_list, person_list)
 # Создаем главное меню
-main_menu = mm.MainMenu(root, table, infoframe, person_list, object_list)
+main_menu = mm.MainMenu(root, table, infoframe, infoframe2, person_list, object_list, object_flag)
 # Запускаем отображение
 root.mainloop()
