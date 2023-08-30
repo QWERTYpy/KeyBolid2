@@ -1,6 +1,6 @@
 # Специальные функции для обработки
 
-def convert_check_10(self, chk_list):
+def convert_check_10(chk_list):
     """
     Преобразует список флагов полученный из чекбоксов в hex строку
     :param chk_list: Список переменных чекбоксов
@@ -36,7 +36,7 @@ def convert_check_10(self, chk_list):
         hex_C = '0' + hex_C
     return hex_A + hex_B + hex_C
 
-def convert_check_4(self, chk_list, perm):
+def convert_check_4(chk_list, perm):
     """
     Получение hex для C2000-4
     :param chk_list:

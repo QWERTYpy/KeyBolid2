@@ -55,7 +55,7 @@ class FramePerson(tk.Toplevel):
         if int(self.object_cur.interface):
             self.entry_bit.insert(0, self.person_cur.bit)
 
-    def bolid_4(self, obj: ObjectBolid):
+    def bolid_4(self, obj: ObjectBolid):  # Создание интерфейса для С2004
         ttk.Label(self, text="Настройка:").place(x=0, y=110)
         if obj.type == '4':
             obj_type = 'C2000-4'
@@ -68,7 +68,7 @@ class FramePerson(tk.Toplevel):
         self.obj_text.insert(1.0, obj.comment)
         self.obj_text.configure(state=tk.DISABLED)
 
-    def bolid_10(self, obj: ObjectBolid):
+    def bolid_10(self, obj: ObjectBolid):  # Создание интерфейса для Сигнала10
         ttk.Label(self, text="Настройка:").place(x=0, y=110)
         if obj.type == '10':
             obj_type = 'Сигнал10'
@@ -107,7 +107,7 @@ class FramePerson(tk.Toplevel):
         self.entry_hex = ttk.Entry(self, validate="key", validatecommand=check)
         self.entry_hex.place(x=100, y=60)
 
-        self.search_btn = ttk.Button(self, text='Искать', command=self.click_btn_search)
+        self.search_btn = ttk.Button(self, text='Искать по ключу', command=self.click_btn_search)
         self.search_btn.place(x=250, y=60)
 
         self.label_bit = ttk.Label(self, text="Доп. ключ:")
@@ -115,7 +115,7 @@ class FramePerson(tk.Toplevel):
         self.entry_bit = ttk.Entry(self)
         self.entry_bit.place(x=100, y=80)
 
-    def get_bd(self):
+    def get_bd(self):  # Создаем окно для взятия данных из БД
         self.frame_get_bd = Get_BD(self, self.entry_hex.get())
 
         self.frame_get_bd.geometry("790x400+50+50")
@@ -123,11 +123,11 @@ class FramePerson(tk.Toplevel):
         self.frame_get_bd.grab_set()
         self.frame_get_bd.wait_window()
 
-    def is_valid(self,newval):
+    def is_valid(self, newval):  # Проверка ввода ключа
         return re.match("^[0-9ABCDEFabcdef]{0,12}$", newval) is not None
 
 
-    def click_btn_search(self):
+    def click_btn_search(self):  # Поиск по ключу
 
         for _ in self.person_list:
             if _.key.upper() == self.entry_hex.get().upper():
@@ -139,21 +139,15 @@ class FramePerson(tk.Toplevel):
                 self.entry_patr.insert(0, _.patronymic)
 
     def click_btn_save(self):
-        flag_dubl_key = False
+        _flag_dubl_key = False
         # # edit_cur = False
         for _ in self.person_list:
             if _.key.upper() == self.entry_hex.get().upper():
-                print(f'Обнаружен дубликат ключа: {_.key.upper()}')
-                flag_dubl_key = True
+                # print(f'Обнаружен дубликат ключа: {_.key.upper()}')
+                _flag_dubl_key = True
                 self.person_cur = _
                 self.person_cur.permission[self.object_cur.id] = [self.object_cur.num, '000000', '000000']
-        # for _ in self.object_list:
-        #     if _.id == self.object_cur.id:
-        #         print(f'Изменения в текущем Объекте: {_.id} - {_.num}')
-        #         edit_cur = True
-        #         flag_dubl = False
 
-        # if not self.flag_add_new:
         self.flag_change = True
         # Считываем новые данные
         self.person_cur.name = self.entry_name.get()
@@ -167,8 +161,8 @@ class FramePerson(tk.Toplevel):
         if self.object_cur.type == '4':
             self.person_cur.permission[self.object_cur.id][2] = sf.convert_check_4(
                 self.object_c2000_4.get_checkbox(), self.object_c2000_4.get_perm())
-        if self.flag_add_new and not flag_dubl_key:
+        if self.flag_add_new and not _flag_dubl_key:
             self.person_list.append(self.person_cur)
         # Добавляем запись в лог
-        sl.save_log(f"{self.person_cur.surname} {self.person_cur.name} {self.person_cur.patronymic} {self.person_cur.key} - {self.object}", f"Изменнение данных")
+        sl.save_log(f"{self.person_cur.surname} {self.person_cur.name} {self.person_cur.patronymic} | {self.person_cur.key} | {self.object}", f"Изменнение данных")
         self.destroy()
