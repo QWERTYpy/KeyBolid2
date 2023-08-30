@@ -5,6 +5,7 @@ from BolidPerm import Signal10, C2000_4
 import re
 import SaveLoadIni as sl
 from FrameGetBd import Get_BD
+import SpecFun as sf
 
 
 # Всплывающее меню при создании или редактировании информации о объекте
@@ -161,10 +162,10 @@ class FramePerson(tk.Toplevel):
         self.person_cur.key = self.entry_hex.get().upper()
         self.person_cur.bit = self.entry_bit.get().upper()
         if self.object_cur.type == '10':
-            self.person_cur.permission[self.object_cur.id][2] = self.person_cur.convert_check_10(
+            self.person_cur.permission[self.object_cur.id][2] = sf.convert_check_10(
                 self.object_signl10.get_checkbox())
         if self.object_cur.type == '4':
-            self.person_cur.permission[self.object_cur.id][2] = self.person_cur.convert_check_4(
+            self.person_cur.permission[self.object_cur.id][2] = sf.convert_check_4(
                 self.object_c2000_4.get_checkbox(), self.object_c2000_4.get_perm())
         if self.flag_add_new and not flag_dubl_key:
             self.person_list.append(self.person_cur)
