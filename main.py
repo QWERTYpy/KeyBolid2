@@ -38,7 +38,7 @@ root.configure(background='#ffffff')  # Устанавливаем цвет фо
 infoframe = InfoFrame(root)
 infoframe2 = InfoFrame2(root)
 # Создаем основную таблицу
-table = tbl.Table(root, infoframe, infoframe2, object_list, person_list)
+table = tbl.Table(root, infoframe, infoframe2, object_list, person_list,  object_flag)
 # Создаем главное меню
 main_menu = mm.MainMenu(root, table, infoframe, infoframe2, person_list, object_list, object_flag)
 # Запускаем отображение

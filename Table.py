@@ -9,11 +9,12 @@ from FrameObject import FrameObject
 
 
 class Table:
-    def __init__(self, root, info_frame, info_frame2, object_list, person_list):
+    def __init__(self, root, info_frame, info_frame2, object_list, person_list,  object_flag):
         self.flag_change = False  # Флаг изменений в записях
         self.root = root  # Указатель на основное окно
         self.object_list = object_list  # Список Объектов
         self.person_list = person_list  # Список Персон
+        self.object_flag = object_flag
         self.info_frame = info_frame  # Указатель на информационное поле
         self.info_frame2 = info_frame2
         self.object_main = '000'  # По умолчанию выбран Объект 000 - Все
@@ -242,6 +243,15 @@ class Table:
                     Sig10.write_key(_.num, permission_list)
                 if _.type == '4':
                     C2004.write_key(_.num, permission_list)
+                print(self.object_flag)
+                print(self.object_main)
+                self.object_flag[_.num] = 0
+                print(self.object_flag)
+                self.info_frame2.update(self.object_flag)
+        self.info_frame.title_left_down_text.set(f"Сохранено")
+
+
+
 
     def combobox_btn_press(self):
         """

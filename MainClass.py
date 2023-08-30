@@ -25,7 +25,10 @@ class InfoFrame2:
         for _ in object_flag:
             if object_flag[_]:
                 str_object_flag += _ + ','
-        self.title_left_down_text.set(f"Изменения в {str_object_flag}")
+        if str_object_flag:
+            self.title_left_down_text.set(f"Изменения в {str_object_flag}")
+        else:
+            self.title_left_down_text.set(f"Изменений нет")
 
 
 

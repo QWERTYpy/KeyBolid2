@@ -64,6 +64,7 @@ class MainMenu:
                         # Записываем информацию в лог
                         sl.save_log(f"{_[0]} {_[1]} {_[2]} | {_[3]} ", f"Удаление Персоны")
                         self.person_list.remove(__)
+                        self.flag_change = True
                         break
         # Обновляем записи в таблице
         self.table.search_table_action()
@@ -91,6 +92,7 @@ class MainMenu:
                         # Записываем информацию в лог
                         sl.save_log(f"{_[0]} {_[1]} {_[2]} | {_[3]}", f"Удаление Заблокированной Персоны")
                         self.person_list.remove(__)
+                        self.flag_change = True
                         break
         # Обновляем записи в таблице
         self.table.search_table_action()
