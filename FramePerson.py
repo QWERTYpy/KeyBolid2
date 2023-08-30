@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from MainClass import Person
+from MainClass import Person, ObjectBolid
 from BolidPerm import Signal10, C2000_4
 import re
 import SaveLoadIni as sl
@@ -54,7 +54,7 @@ class FramePerson(tk.Toplevel):
         if int(self.object_cur.interface):
             self.entry_bit.insert(0, self.person_cur.bit)
 
-    def bolid_4(self, obj: object.ObjectBolid):
+    def bolid_4(self, obj: ObjectBolid):
         ttk.Label(self, text="Настройка:").place(x=0, y=110)
         if obj.type == '4':
             obj_type = 'C2000-4'
@@ -67,7 +67,7 @@ class FramePerson(tk.Toplevel):
         self.obj_text.insert(1.0, obj.comment)
         self.obj_text.configure(state=tk.DISABLED)
 
-    def bolid_10(self, obj: object.ObjectBolid):
+    def bolid_10(self, obj: ObjectBolid):
         ttk.Label(self, text="Настройка:").place(x=0, y=110)
         if obj.type == '10':
             obj_type = 'Сигнал10'
