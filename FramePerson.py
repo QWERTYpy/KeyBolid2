@@ -164,5 +164,8 @@ class FramePerson(tk.Toplevel):
         if self.flag_add_new and not _flag_dubl_key:
             self.person_list.append(self.person_cur)
         # Добавляем запись в лог
-        sl.save_log(f"{self.person_cur.surname} {self.person_cur.name} {self.person_cur.patronymic} | {self.person_cur.key} | {self.object}", f"Изменнение данных")
+        sl.save_log(fio=f"{self.person_cur.surname} {self.person_cur.name} {self.person_cur.patronymic}",
+                    key_pers=self.person_cur.key,
+                    id_obj=self.object,
+                    mess=f"Изменнение данных")
         self.destroy()
