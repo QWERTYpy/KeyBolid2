@@ -247,9 +247,9 @@ class Table:
         for _ in self.object_list:
             if self.object_main == _.id:
                 if _.type == '10':
-                    Sig10.write_key(_.num, permission_list)
+                    sig10.write_key(_.num, permission_list)
                 if _.type == '4':
-                    C2004.write_key(_.num, permission_list)
+                    c2004.write_key(_.num, permission_list)
                 # print(self.object_flag)
                 # print(self.object_main)
                 self.object_flag[_.num] = 0
