@@ -1,11 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
-from MainClass import Person, ObjectBolid
-from BolidPerm import Signal10, C2000_4
+from main_class import Person, ObjectBolid
+from bolid_perm import Signal10, C2000_4
 import re
-import SaveLoadIni as sl
-from FrameGetBd import Get_BD
-import SpecFun as sf
+import save_load_ini as sl
+from frame_get_bd import Get_BD
+import spec_fun as sf
 
 
 # Всплывающее меню при создании или редактировании информации о объекте

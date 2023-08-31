@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from Postgres import PostgessBase
+from postgres import PostgessBase
 
 
 # Всплывающее меню при создании или редактировании информации о объекте

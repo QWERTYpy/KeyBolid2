@@ -1,7 +1,7 @@
 # Класс описывающий интерфейс Сигнал10
 from tkinter import ttk
 import tkinter as tk
-from MainClass import Person
+from main_class import Person
 
 
 

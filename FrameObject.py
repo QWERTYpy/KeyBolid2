@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-from MainClass import ObjectBolid
-import SaveLoadIni as sl
-from BolidPerm import Signal10, C2000_4
+from main_class import ObjectBolid
+import save_load_ini as sl
+from bolid_perm import Signal10, C2000_4
 
 # Всплывающее меню при создании или редактировании информации об объекте
 class FrameObject(tk.Toplevel):

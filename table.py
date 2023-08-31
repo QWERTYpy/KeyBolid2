@@ -2,9 +2,9 @@
 from tkinter import ttk
 import tkinter as tk
 import FramePerson as fp
-import C2004
-import Sig10
-from Postgres import PostgessBase
+import c2004
+import sig10
+from postgres import PostgessBase
 from FrameObject import FrameObject
 
 

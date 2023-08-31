@@ -1,5 +1,5 @@
 import configparser
-from MainClass import  Person, ObjectBolid
+from main_class import  Person, ObjectBolid
 import os
 import time
 

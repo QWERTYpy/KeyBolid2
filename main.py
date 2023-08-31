@@ -1,8 +1,8 @@
 import tkinter as tk
-import SaveLoadIni as sl
-import MainMenu as mm
-import Table as tbl
-from MainClass import InfoFrame, InfoFrame2
+import save_load_ini as sl
+import main_menu as mm
+import table as tbl
+from main_class import InfoFrame, InfoFrame2
 from tkinter import messagebox as mb
 
 

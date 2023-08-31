@@ -1,14 +1,14 @@
 # Верхнее меню
 import tkinter as tk
-import SaveLoadIni as sl
+import save_load_ini as sl
 import crc8bolid as crc
 import FramePerson as fp
 from tkinter import filedialog
 from FrameObject import FrameObject
-from MainClass import Person
+from main_class import Person
 import binascii
 import re
-from Postgres import PostgessBase
+from postgres import PostgessBase
 from tkinter import messagebox as mb
 
 
