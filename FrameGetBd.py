@@ -5,13 +5,13 @@ from Postgres import PostgessBase
 
 # Всплывающее меню при создании или редактировании информации о объекте
 class Get_BD(tk.Toplevel):
-    def __init__(self, parent, hex_key):
+    def __init__(self, parent, hex_key, _name, _surname, _patr):
         super().__init__(parent)
         self.root = parent
-        self.search_table(hex_key)
+        self.search_table(hex_key, _name, _surname, _patr)
         self.main_table_create()
 
-    def search_table(self, hex_key):
+    def search_table(self, hex_key, _name, _surname, _patr):
         """
         Составляем интерфейс для поиска
         :return:
@@ -20,16 +20,19 @@ class Get_BD(tk.Toplevel):
         self.entry_surname = ttk.Entry(self)
         self.entry_surname.config(width=23)
         self.entry_surname.place(x=10, y=30)
+        self.entry_surname.insert(0,_surname)
 
         ttk.Label(self, text="Имя").place(x=160, y=10)
         self.entry_name = ttk.Entry(self)
         self.entry_name.config(width=23)
         self.entry_name.place(x=160, y=30)
+        self.entry_name.insert(0,_name)
 
         ttk.Label(self, text="Отчество").place(x=310, y=10)
         self.entry_patronymic = ttk.Entry(self)
         self.entry_patronymic.config(width=23)
         self.entry_patronymic.place(x=310, y=30)
+        self.entry_patronymic.insert(0,_patr)
 
         ttk.Label(self, text="Ключ").place(x=460, y=10)
         self.entry_hex = ttk.Entry(self)

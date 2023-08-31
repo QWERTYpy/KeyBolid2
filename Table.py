@@ -85,6 +85,13 @@ class Table:
             self.search_table_action()
         # Устанавливаем флаг изменений
         self.flag_change = self.flag_change or self.frame_person.flag_change
+        if self.flag_change:
+            for _ in self.object_list:
+                if self.object_main == _.id:
+                    self.object_flag[_.num] = 1
+                    # print(self.object_flag)
+                    self.info_frame2.update(self.object_flag)
+
 
     def reboot_table(self):
         """
@@ -243,12 +250,12 @@ class Table:
                     Sig10.write_key(_.num, permission_list)
                 if _.type == '4':
                     C2004.write_key(_.num, permission_list)
-                print(self.object_flag)
-                print(self.object_main)
+                # print(self.object_flag)
+                # print(self.object_main)
                 self.object_flag[_.num] = 0
-                print(self.object_flag)
+                # print(self.object_flag)
                 self.info_frame2.update(self.object_flag)
-        self.info_frame.title_left_down_text.set(f"Сохранено")
+        self.info_frame.title_left_down_text.set(f"Выгружено")
 
 
 

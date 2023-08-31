@@ -116,7 +116,7 @@ class FramePerson(tk.Toplevel):
         self.entry_bit.place(x=100, y=80)
 
     def get_bd(self):  # Создаем окно для взятия данных из БД
-        self.frame_get_bd = Get_BD(self, self.entry_hex.get())
+        self.frame_get_bd = Get_BD(self, self.entry_hex.get(), self.entry_name.get(), self.entry_surname.get(), self.entry_patr.get())
 
         self.frame_get_bd.geometry("790x400+50+50")
         self.frame_get_bd.title('Поиск в базе данных')
@@ -168,4 +168,5 @@ class FramePerson(tk.Toplevel):
                     key_pers=self.person_cur.key,
                     id_obj=self.object,
                     mess=f"Изменнение данных")
+
         self.destroy()
