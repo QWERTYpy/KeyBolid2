@@ -172,9 +172,14 @@ class MainMenu:
             self.frame_person.grab_set()
             self.frame_person.wait_window()
             # Если данные изменены, то обновляем данные
-            if self.frame_person.flag_change:
+            _flag_change_frame = 1 if len(self.frame_person.list_change) > 0 else 0
+            if _flag_change_frame:
                 self.table.search_table_action()
-            self.flag_change = self.flag_change or self.frame_person.flag_change
+            self.flag_change = self.flag_change or _flag_change_frame
+            if self.flag_change:
+                for _ in self.frame_person.list_change:
+                    self.object_flag[_] = 1
+                    self.info_frame2.update(self.object_flag)
 
     def main_menu_save_object(self):
         """

@@ -30,7 +30,7 @@ object_flag = {_.num: 0 for _ in object_list}
 # Создаем приложение
 root = tk.Tk()
 root.protocol("WM_DELETE_WINDOW", on_closing)
-root.title("KeyBolid - v.2.0.0")
+root.title("KeyBolid - v.2.1.1")
 root.geometry("840x600+10+10")  # Создаем окно
 root.resizable(False, False)  # Запрещаем изменять размер окна
 root.configure(background='#ffffff')  # Устанавливаем цвет фона
