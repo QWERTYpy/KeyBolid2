@@ -81,16 +81,16 @@ class Table:
         self.frame_person.grab_set()
         self.frame_person.wait_window()
         # Обновляем вывод в таблице
-        if self.frame_person.flag_change:
+        _flag_change_frame = 1 if len(self.frame_person.list_change) > 0 else 0
+        if _flag_change_frame:
             self.search_table_action()
         # Устанавливаем флаг изменений
-        self.flag_change = self.flag_change or self.frame_person.flag_change
+
+        self.flag_change = self.flag_change or _flag_change_frame
         if self.flag_change:
-            for _ in self.object_list:
-                if self.object_main == _.id:
-                    self.object_flag[_.num] = 1
-                    # print(self.object_flag)
-                    self.info_frame2.update(self.object_flag)
+            for _ in self.frame_person.list_change:
+                self.object_flag[_] = 1
+                self.info_frame2.update(self.object_flag)
 
 
     def reboot_table(self):

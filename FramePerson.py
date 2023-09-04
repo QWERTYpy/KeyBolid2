@@ -10,39 +10,43 @@ import spec_fun as sf
 
 # Всплывающее меню при создании или редактировании информации о объекте
 class FramePerson(tk.Toplevel):
-    def __init__(self, parent, table, key, object, person_list, object_list):
+    def __init__(self, parent, table, key, object_id, person_list, object_list):
         super().__init__(parent)
         self.key = key
         self.table = table
         # print(key)
-        self.object = object
+        self.object_id = object_id
         self.person_list = person_list
         self.object_list = object_list
         # self.checkbox_list = []
         self.object_cur = ''
         for __ in self.object_list:
-            if __.id == self.object:
+            if __.id == self.object_id:
+                # Получаем ссылку на класс текущего Объекта
                 self.object_cur = __
         for _ in self.person_list:
-            # print(type(_.key), type(self.key))
+            # Если такой ключ существует, то получаем ссылку на класс Персоны
             if _.key[6:] == self.key[6:]:
+                # Указываем, что это не новый пользователь
                 self.flag_add_new = False
                 self.person_cur = _
+        # Если ключ отсутствует, то создается новый пользователь
         if not self.key:
             self.person_cur = Person()
             self.flag_add_new = True
             # self.person_list.append(Person())
             # self.person_cur = self.person_list[-1]
             self.person_cur.permission[self.object_cur.id] = [self.object_cur.num, '000000', '000000']
-
+        # Создаем окно
         self.create_frame()
+        # Если есть ключ, то заполняем поля
         if self.key:
             self.filling_person()
         if self.object_cur.type == '4':
             self.bolid_4(self.object_cur)
         if self.object_cur.type == '10':
             self.bolid_10(self.object_cur)
-        self.flag_change = False
+        self.list_change = []  # Содержит номера приборов для которых произошли изменения
         self.btn_save = ttk.Button(self, text='Сохранить', command=self.click_btn_save)
         self.btn_save.place(x=300, y=340)
 
@@ -50,8 +54,8 @@ class FramePerson(tk.Toplevel):
         self.entry_name.insert(0, self.person_cur.name)
         self.entry_surname.insert(0, self.person_cur.surname)
         self.entry_patr.insert(0, self.person_cur.patronymic)
-        #self.entry_hex.insert(0, self.person_cur.key)
         self.entry_hex.insert(0, self.person_cur.key)
+        # Если используется паразитный бит, то заполняется соответсвующее поле
         if int(self.object_cur.interface):
             self.entry_bit.insert(0, self.person_cur.bit)
 
@@ -146,9 +150,25 @@ class FramePerson(tk.Toplevel):
                 # print(f'Обнаружен дубликат ключа: {_.key.upper()}')
                 _flag_dubl_key = True
                 self.person_cur = _
-                self.person_cur.permission[self.object_cur.id] = [self.object_cur.num, '000000', '000000']
+                # Если такой ключ обнаружен, но такого Объекта у пользователя в доступе не было, шаблон доступа
+                if not self.person_cur.permission.get(self.object_cur.id):
+                    self.person_cur.permission[self.object_cur.id] = [self.object_cur.num, '000000', '000000']
 
-        self.flag_change = True
+
+        # Проверяем, что изменилось
+        if self.person_cur.key != self.entry_hex.get().upper():
+            print('key')
+            self.list_change = self.person_cur.get_list_perm_obj()
+        if self.object_cur.type == '10':
+            if self.person_cur.permission[self.object_cur.id][2] != sf.convert_check_10(
+                self.object_signl10.get_checkbox()):
+                print('Dost10')
+                self.list_change.append(self.object_cur.num)
+        if self.object_cur.type == '4':
+            if self.person_cur.permission[self.object_cur.id][2] != sf.convert_check_4(
+                self.object_c2000_4.get_checkbox(), self.object_c2000_4.get_perm()):
+                print('Dost4')
+                self.list_change.append(self.object_cur.num)
         # Считываем новые данные
         self.person_cur.name = self.entry_name.get()
         self.person_cur.surname = self.entry_surname.get()
@@ -166,7 +186,7 @@ class FramePerson(tk.Toplevel):
         # Добавляем запись в лог
         sl.save_log(fio=f"{self.person_cur.surname} {self.person_cur.name} {self.person_cur.patronymic}",
                     key_pers=self.person_cur.key,
-                    id_obj=self.object,
+                    id_obj=self.object_id,
                     mess=f"Изменнение данных")
 
         self.destroy()

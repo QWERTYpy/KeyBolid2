@@ -56,11 +56,17 @@ class Person:
         self.permission = {}  # Права доступа # id_object: [Номер прибора, ХО, Доступ]
         self.bit = bit  # Паразитный бит
 
-    def get_perm_obj(self):  # Получение списка приборов к которым есть доступ у человека
+    def get_perm_obj(self):  # Получение списка приборов к которым есть доступ у человека строкой
         _list_obj = []
         for _ in self.permission.keys():
             _list_obj.append(self.permission[_][0])
         return (',').join(_list_obj)
+
+    def get_list_perm_obj(self):  # Получение списка приборов к которым есть доступ у человека строкой
+        _list_obj = []
+        for _ in self.permission.keys():
+            _list_obj.append(self.permission[_][0])
+        return _list_obj
 
     def get_obj(self):
         return [_[0] for _ in self.permission.values()]
