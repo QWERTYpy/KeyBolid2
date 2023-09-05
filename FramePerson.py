@@ -6,7 +6,7 @@ import re
 import save_load_ini as sl
 from frame_get_bd import Get_BD
 import spec_fun as sf
-
+from tkinter.messagebox import showerror
 
 # Всплывающее меню при создании или редактировании информации о объекте
 class FramePerson(tk.Toplevel):
@@ -61,6 +61,7 @@ class FramePerson(tk.Toplevel):
 
     def bolid_4(self, obj: ObjectBolid):  # Создание интерфейса для С2004
         ttk.Label(self, text="Настройка:").place(x=0, y=110)
+        obj_type = ''
         if obj.type == '4':
             obj_type = 'C2000-4'
         ttk.Label(self, text=obj_type).place(x=100, y=110)
@@ -74,6 +75,7 @@ class FramePerson(tk.Toplevel):
 
     def bolid_10(self, obj: ObjectBolid):  # Создание интерфейса для Сигнала10
         ttk.Label(self, text="Настройка:").place(x=0, y=110)
+        obj_type = ''
         if obj.type == '10':
             obj_type = 'Сигнал10'
         ttk.Label(self, text=obj_type).place(x=100, y=110)
@@ -154,20 +156,30 @@ class FramePerson(tk.Toplevel):
                 if not self.person_cur.permission.get(self.object_cur.id):
                     self.person_cur.permission[self.object_cur.id] = [self.object_cur.num, '000000', '000000']
 
-
+        # Проверяем длину ключа
+        if len(self.entry_hex.get().upper()) < 12:
+            showerror(title="Внимание", message="Некорректный ключ")
+            return
+        if self.object_cur.type == '10':
+            if sf.convert_check_10(self.object_signl10.get_checkbox()) == '000000':
+                print(sf.convert_check_10(self.object_signl10.get_checkbox()))
+                showerror(title="Внимание", message="Некорректный доступ!")
+                return
+        if self.object_cur.type == '4':
+            if sf.convert_check_4(self.object_c2000_4.get_checkbox(), self.object_c2000_4.get_perm()) == '000000':
+                print(sf.convert_check_4(self.object_c2000_4.get_checkbox(), self.object_c2000_4.get_perm()))
+                showerror(title="Внимание", message="Некорректный доступ!")
+                return
         # Проверяем, что изменилось
         if self.person_cur.key != self.entry_hex.get().upper():
-            print('key')
             self.list_change = self.person_cur.get_list_perm_obj()
         if self.object_cur.type == '10':
-            if self.person_cur.permission[self.object_cur.id][2] != sf.convert_check_10(
-                self.object_signl10.get_checkbox()):
-                print('Dost10')
+            if self.person_cur.permission[self.object_cur.id][2] != \
+                    sf.convert_check_10(self.object_signl10.get_checkbox()):
                 self.list_change.append(self.object_cur.num)
         if self.object_cur.type == '4':
-            if self.person_cur.permission[self.object_cur.id][2] != sf.convert_check_4(
-                self.object_c2000_4.get_checkbox(), self.object_c2000_4.get_perm()):
-                print('Dost4')
+            if self.person_cur.permission[self.object_cur.id][2] != \
+                    sf.convert_check_4(self.object_c2000_4.get_checkbox(), self.object_c2000_4.get_perm()):
                 self.list_change.append(self.object_cur.num)
         # Считываем новые данные
         self.person_cur.name = self.entry_name.get()
