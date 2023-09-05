@@ -52,7 +52,12 @@ class MainMenu:
         self.info_frame.title_left_down_text.set(f"Удаление пропусков ...")
         self.info_frame.title_left_down.update()
         _count_del = 0
+        _proc_table = 0
+        _all_table = len(self.table.people_table)
         for _ in self.table.people_table:
+            _proc_table += 1
+            self.info_frame.title_left_down_text.set(f"Обработано {100*_proc_table//_all_table} %")
+            self.info_frame.title_left_down.update()
             # Если ключ возвращен, то удаляем его
             if person_bd.search_card(_[3]) != 1:
                 _count_del += 1
@@ -65,7 +70,9 @@ class MainMenu:
                         sl.save_log(fio= f'{_[0]} {_[1]} {_[2]}', key_pers=_[3], mess="Удаление Персоны")
                         self.person_list.remove(__)
                         self.flag_change = True
+
                         break
+
         # Обновляем записи в таблице
         self.table.search_table_action()
         self.info_frame.title_left_down_text.set(f"Удалено {_count_del} пропусков")
@@ -80,7 +87,12 @@ class MainMenu:
         self.info_frame.title_left_down_text.set(f"Удаление пропусков ...")
         self.info_frame.title_left_down.update()
         _count_block = 0
+        _proc_table = 0
+        _all_table = len(self.table.people_table)
         for _ in self.table.people_table:
+            _proc_table += 1
+            self.info_frame.title_left_down_text.set(f"Обработано {100 * _proc_table // _all_table} %")
+            self.info_frame.title_left_down.update()
             # Если ключ возвращен, то удаляем его
             if person_bd.search_block(_[3]) == 1:
                 _count_block += 1
